@@ -222,7 +222,7 @@
                         <version>21.2.0</version>
                         <configuration>
                             <!-- The native image build needs to know the entry point to your application -->
-                            <mainClass>com.example.demo.DemoApplication</mainClass>
+                            <mainClass>com.sample.SampleApplication</mainClass>
                         </configuration>
                         <executions>
                             <execution>
