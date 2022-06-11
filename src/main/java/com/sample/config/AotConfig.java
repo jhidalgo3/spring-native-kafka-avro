@@ -9,7 +9,7 @@ import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.errors.DefaultProductionExceptionHandler;
 import org.apache.kafka.streams.errors.LogAndFailExceptionHandler;
-import org.apache.kafka.streams.processor.DefaultPartitionGrouper;
+
 import org.apache.kafka.streams.processor.FailOnInvalidTimestamp;
 import org.apache.kafka.streams.processor.internals.StreamsPartitionAssignor;
 import org.apache.kafka.streams.processor.internals.assignment.FallbackPriorTaskAssignor;
@@ -23,7 +23,7 @@ import org.springframework.nativex.hint.TypeHint;
 @Configuration
 @NativeHint(
         types = @TypeHint(types = {
-                DefaultPartitionGrouper.class,
+
                 StreamsPartitionAssignor.class,
                 DefaultProductionExceptionHandler.class,
                 FailOnInvalidTimestamp.class,

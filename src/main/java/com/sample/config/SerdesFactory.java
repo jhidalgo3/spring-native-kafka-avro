@@ -15,7 +15,7 @@ public class SerdesFactory {
 
     private static Map<String, String> serdeConfig;
 
-    @Value("${spring.kafka.properties.schema.registry.url}")
+    @Value("${spring.kafka.producer.schema.registry.url}")
     public void setSchemaRegistry(String schemaRegistry){
         SerdesFactory.serdeConfig = Collections.singletonMap("schema.registry.url",
                 schemaRegistry);

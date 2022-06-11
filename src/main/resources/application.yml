@@ -16,12 +16,14 @@ spring:
         default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
         default.value.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
         default.deserialization.exception.handler: org.apache.kafka.streams.errors.LogAndFailExceptionHandler
+        
     properties:
-      schema.registry.url: http://localhost:8081
       bootstrap.servers: ${spring.kafka.bootstrap-servers}
+      schema.registry.url: http://localhost:8081
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      schema.registry.url: http://localhost:8081
 
 
 logging:

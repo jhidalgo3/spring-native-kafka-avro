@@ -29,6 +29,6 @@ public class Consumer {
                 .stream(
                         TOPIC,
                         Consumed.with(Serdes.String(), SerdesFactory.addressSerde()))
-                .peek((key, address) -> log.info("Address: {}",address));
+                .peek((key, address) -> log.info("Consume Address: {}",address));
     }
 }
