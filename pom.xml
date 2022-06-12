@@ -14,7 +14,7 @@
     <description>Demo Kafka avro project for Spring Boot Native</description>
     <properties>
         <java.version>11</java.version>
-        <spring-native.version>0.11.1</spring-native.version>
+        <spring-native.version>0.12.0</spring-native.version>
         <avro.version>1.11.0</avro.version>
         <confluent.version>5.5.1</confluent.version>
         <kafka-streams.version>3.0.0</kafka-streams.version>
@@ -33,10 +33,7 @@
     </dependencyManagement-->
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
-        </dependency>
+        
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
@@ -193,13 +190,25 @@
                         <artifactId>spring-boot-maven-plugin</artifactId>
                         <configuration>
                             <image>
-                                <name>hantsy/${project.artifactId}:latest</name>
+                                <name>jhidalgo3/${project.artifactId}:latest</name>
                                 <builder>paketobuildpacks/builder:tiny</builder>
                                 <env>
                                     <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                                    <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                                        -H:IncludeResourceBundles=sun.security.util.Resources,
+                                        -H:AdditionalSecurityProviders=com.sun.security.sasl.Provider,com.sun.security.sasl.gsskerb.JdkSASL
+                                    </BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
                                 </env>
                             </image>
                         </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>build-image</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
