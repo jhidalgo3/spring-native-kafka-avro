@@ -9,8 +9,10 @@ mvn clean package -P default,spring-native,build-native-image
 __Run spring-boot application__
 
 ```
- mvn spring-boot:run -Dspring-boot.run.profiles=confluent-cloud -P default,spring-native
+ mvn spring-boot:run -Dspring-boot.run.profiles=docker -P default,spring-native
 ```
+
+
 
 ## Build docker Native Image
 
@@ -31,7 +33,8 @@ SPRING_CONFIG_NAME=application
 SPRING_CONFIG_LOCATION=file:///config/
 SPRING_PROFILES_ACTIVE=docker
 
-docker run -p 8080:8080 -e SPRING_PROFILES_ACTIVE=docker -e SPRING_CONFIG_LOCATION=file:///config/  -ti -v $PWD/src/main/resources/:/config jhidalgo3/spring-native-kafka-avro:latest
+docker run --rm -p 8080:8080 -e SPRING_PROFILES_ACTIVE=docker-k6 -e SPRING_CONFIG_LOCATION=file:///config/  -ti -v $PWD/config:/config jhidalgo3/spring-native-kafka-avro:latest
+
 
 **Confluent-cloud**
 
