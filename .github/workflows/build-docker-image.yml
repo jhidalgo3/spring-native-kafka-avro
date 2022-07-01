@@ -1,0 +1,57 @@
+name: build-docker-image
+
+on:
+  push:
+    paths-ignore:
+      - "docs/**"
+    branches:
+      - main
+
+jobs:
+  build-docker-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: 17
+
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Build Docker Image
+        run: mvn clean spring-boot:build-image -DskipTests -Pdefault,spring-native,build-docker-image
+
+      #- name: Run App in Docker
+      #  run: |
+      #    docker-compose up -d
+      #    sleep 10
+      #    docker ps -a
+#
+      #- name: Run FunctionalTests
+      #  run: |
+      #    mvn test -Pfunctional-test
+
+      - name: tools - docker - login
+        if: github.event_name == 'push'
+        uses: docker/login-action@v1
+        with:
+          #registry: ${{ env.registry }}
+          username: ${{ secrets.ES_DOCKERHUB_USERNAME }}
+          password: ${{ secrets.ES_DOCKERHUB_PAT }}
+
+      - name: "docker - build and  push"
+        if: github.event_name == 'push'
+        run: |
+          docker push jhidalgo3/spring-native-kafka-avro
